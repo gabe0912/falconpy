@@ -1,0 +1,6 @@
+# Demo requirements with deliberately-vulnerable pins (do not deploy)
+pyyaml==5.3
+requests==2.18.4
+urllib3==1.26.4
+cryptography==36.0.0
+jinja2==3.1.2
