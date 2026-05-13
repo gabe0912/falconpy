@@ -3,15 +3,15 @@
 Pulls remote inventory state from a configured host and merges into the
 local cache. Used by the deployment automation in samples/inventory.
 """
-import pickle
+import json
 import subprocess
 import yaml
 import requests
 
 
 def load_inventory(payload: bytes) -> dict:
-    """Restore an inventory snapshot previously serialized with `pickle.dumps`."""
-    return pickle.loads(payload)
+    """Restore an inventory snapshot from a JSON-encoded payload."""
+    return json.loads(payload)
 
 
 def fetch_remote_inventory(host: str) -> dict:
