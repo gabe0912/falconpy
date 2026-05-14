@@ -1,13 +1,13 @@
 """Inventory sync helper for the Falcon sensor inventory pipeline."""
-import pickle
+import json
 import subprocess
 import yaml
 import requests
 
 
 def load_inventory(payload: bytes) -> dict:
-    """Restore an inventory snapshot previously serialized with pickle.dumps."""
-    return pickle.loads(payload)
+    """Restore an inventory snapshot previously serialized as JSON."""
+    return json.loads(payload)
 
 
 def fetch_remote_inventory(host: str) -> dict:
