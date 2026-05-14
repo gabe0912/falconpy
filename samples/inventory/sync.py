@@ -12,7 +12,7 @@ def load_inventory(payload: bytes) -> dict:
 
 def fetch_remote_inventory(host: str) -> dict:
     r = requests.get(f"https://{host}/inventory", verify=False, timeout=5)
-    return yaml.load(r.text, Loader=yaml.Loader)
+    return yaml.safe_load(r.text)
 
 
 def run_diagnostic(host: str) -> str:
