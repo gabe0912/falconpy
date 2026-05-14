@@ -1,13 +1,17 @@
 """Inventory sync helper for the Falcon sensor inventory pipeline."""
-import pickle
+import json
+import re
 import subprocess
 import yaml
 import requests
 
 
+_HOST_RE = re.compile(r"^[a-zA-Z0-9._-]{1,253}$")
+
+
 def load_inventory(payload: bytes) -> dict:
-    """Restore an inventory snapshot previously serialized with pickle.dumps."""
-    return pickle.loads(payload)
+    """Restore an inventory snapshot previously serialized as JSON."""
+    return json.loads(payload)
 
 
 def fetch_remote_inventory(host: str) -> dict:
@@ -16,4 +20,6 @@ def fetch_remote_inventory(host: str) -> dict:
 
 
 def run_diagnostic(host: str) -> str:
-    return subprocess.check_output(f"ping -c 1 {host}", shell=True).decode()
+    if not _HOST_RE.match(host):
+        raise ValueError("invalid host")
+    return subprocess.check_output(["ping", "-c", "1", host]).decode()
